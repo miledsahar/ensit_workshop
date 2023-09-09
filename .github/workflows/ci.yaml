@@ -31,4 +31,4 @@ jobs:
         context: .  # Build context, assumes Dockerfile is in the root.
         file: ./ensit_workshop/Dockerfile  # Path to your Dockerfile
         push: true
-        tags: nginx:latest   
+        tags: saharmiled/newimg:latest   
