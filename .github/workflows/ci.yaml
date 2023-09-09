@@ -23,3 +23,12 @@ jobs:
 
     - name: Run tests
       run: npm test
+
+    - name: Build and Push Docker Image
+      if: startsWith(github.ref, 'refs/heads/feature/')
+      uses: docker/build-push-action@v2
+      with:
+        context: .  # Build context, assumes Dockerfile is in the root.
+        file: ./ensit_workshop/Dockerfile  # Path to your Dockerfile
+        push: true
+        tags: nginx:latest   
