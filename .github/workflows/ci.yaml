@@ -17,7 +17,7 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v2
       with:
-        node-version: 18  # Change this to your Node.js version
+        node-version: 16  # Change this to your Node.js version
 
     - name: Install dependencies
       run: npm install
@@ -26,10 +26,24 @@ jobs:
       run: npm test
 
     - name: Build and Push Docker Image
-      if: startsWith(github.ref, 'refs/heads/feature/')
-      uses: docker/build-push-action@v2
-      with:
-        context: .  # Build context, assumes Dockerfile is in the root.
-        file: ./ensit_workshop/Dockerfile  # Path to your Dockerfile
-        push: true
-        tags: saharmiled/newimg:latest   
+      run: docker build -t newimg
+
+    - name: Log in to the Docker Hub 
+      run : docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD}}
+
+    - name: Tag Docker Image 
+      run: docker tag newimg ${{ secrets.DOCKER_USERNAME }}/newimg:latest
+
+    - name: push Docker image to Docker Hub
+      run : docker push ${{secrets.DOCKER_USERNAME}}/newimg:latest 
+    
+
+
+
+      # if: startsWith(github.ref, 'refs/heads/feature/')
+      # uses: docker/build-push-action@v2
+      # with:
+      #   context: .  # Build context, assumes Dockerfile is in the root.
+      #   file: ./ensit_workshop/Dockerfile  # Path to your Dockerfile
+      #   push: true
+      #   tags: saharmiled/newimg:latest   
