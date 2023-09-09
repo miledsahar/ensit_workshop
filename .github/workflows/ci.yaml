@@ -25,7 +25,7 @@ jobs:
       run: npm test
 
     - name: Build and Push Docker Image
-      run: docker build -t newimg1
+      run: docker build -t newimg1 .
 
     - name: Log in to Docker Hub 
       run : docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
